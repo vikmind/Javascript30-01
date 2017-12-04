@@ -14,7 +14,8 @@
     "start": "cycle-scripts start",
     "test": "cycle-scripts test",
     "build": "cycle-scripts build",
-    "eject": "cycle-scripts eject"
+    "eject": "cycle-scripts eject",
+    "deploy": "npm run build && surge build vikmind-drum-kit.surge.sh"
   },
   "cca": {
     "language": "javascript",
