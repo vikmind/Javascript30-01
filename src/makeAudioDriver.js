@@ -2,6 +2,7 @@ export default function makeAudioDriver(data) {
   const elements = data.map(item => {
     const audioEl = document.createElement('audio');
     audioEl.setAttribute('data-key', item.key);
+    audioEl.setAttribute('preload', 'meta');
     audioEl.setAttribute('src', `sounds/${item.sound}.wav`);
     return audioEl;
   });
