@@ -22,31 +22,28 @@ export function App (sources) {
   ).startWith({})
 
   const actionToKeyClassName = (item, action) =>
-    action.code === item.key
-      ? action.type === 'transitionend'
-        ? 'key'
-        : action.type === 'key'
-          ? 'key playing'
-          : 'key'
+    (action.code === item.key)
+    && (action.type !== 'transitionend')
+    && (action.type === 'key')
+      ? 'key playing'
       : 'key';
 
   const vtree$ = action$.map(action => (
     <div className="keys">
       { data.map(item => (
-        <div className={ actionToKeyClassName(item, action) } data-key={ item.key }>
+        <button className={ actionToKeyClassName(item, action) } data-key={ item.key }>
           <kbd>{ item.letter }</kbd>
           <span className="sound">{ item.sound }</span>
-          <audio data-key={ item.key } src={ `sounds/${ item.sound }.wav` }></audio>
-        </div>
+        </button>
       )) }
     </div>
   ));
 
-  const audios$ = userActions$.map(action => action.code);
+  const audiosToPlay$ = userActions$.map(action => action.code);
 
   const sinks = {
     DOM: vtree$,
-    AudioDriver: audios$,
+    AudioDriver: audiosToPlay$,
   }
   return sinks
 }
